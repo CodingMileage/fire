@@ -1,16 +1,17 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { Auth } from "../components/auth";
-import { db } from "../config/firebase";
+import { db, auth, storage } from "../config/firebase";
 import {
   getDocs,
   collection,
   addDoc,
   deleteDoc,
   doc,
+  updateDoc
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+import {getStorage, ref, uploadBytes} from "firebase/storage"
+// import { Button } from "react-bootstrap";
 
 const MovieDB = () => {
   const [movieList, setMovieList] = useState([]);
@@ -18,21 +19,31 @@ const MovieDB = () => {
   const [newMovieTitle, setNewMovieTitle] = useState("");
   const [newReleaseDate, setNewReleaseDate] = useState(0);
   const [isNewAward, setIsNewAward] = useState(false);
+  const [updateTitle, setUpdateTitle] = useState("");
+  
+  const [fileUpload, setFileUpload] = useState(null);
+
 
   const moviesCollectionRef = collection(db, "movies");
+  // console.log(moviesCollectionRef)
 
   const getMovieList = async () => {
     try {
       const data = await getDocs(moviesCollectionRef);
-      const filterData = data.docs.map((doc) => ({
+      const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      // console.log({ filterData });
-      setMovieList(filterData);
-    } catch (error) {
-      console.log(error);
+      setMovieList(filteredData);
+    } catch (err) {
+      console.error(err);
     }
+  };
+
+  const updateMovieTitle = async (id, ) => {
+    const movieDoc = doc(db, "movies", id);
+    await updateDoc(movieDoc, { title: updateTitle });
+
   };
 
   const deleteMovie = async (id) => {
@@ -40,9 +51,7 @@ const MovieDB = () => {
     await deleteDoc(movieDoc);
   };
 
-  useEffect(() => {
-    getMovieList();
-  }, []);
+  
 
   const onSubmitMovie = async () => {
     try {
@@ -50,6 +59,7 @@ const MovieDB = () => {
         title: newMovieTitle,
         releaseDate: newReleaseDate,
         award: isNewAward,
+        userId: auth?.currentUser?.uid,
       });
 
       getMovieList();
@@ -57,6 +67,22 @@ const MovieDB = () => {
       console.log(error);
     }
   };
+
+  const uploadFile = async () => {
+    if (!fileUpload) return;
+    const filesFolderRef = ref(storage, `music/${fileUpload.name}`);
+    try {
+      await uploadBytes(filesFolderRef, fileUpload);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getMovieList();
+  }, []);
+
+  
 
   return (
     <>
@@ -95,8 +121,23 @@ const MovieDB = () => {
             >
               Delete
             </button>
+
+            <input 
+              placeholder="New Title..."
+              onChange={(e) => setUpdateTitle(e.target.value)}
+            />
+            <button 
+              class="btn btn-info"
+              onClick={() => updateMovieTitle(movie.id)}>
+              Update Title
+              </button>
           </div>
         ))}
+      </div>
+
+      <div>
+        <input type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
+        <button onClick={uploadFile}> Upload File </button>
       </div>
     </>
   );

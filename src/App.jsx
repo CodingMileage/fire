@@ -6,6 +6,7 @@ import Experiance from "./components/Experiance";
 import Boott from "./components/BootTut/Boott";
 import ReactBoot from "./components/BootTut/ReactBoot";
 import AudioComponent from "./components/AudioComponent";
+import Example from "./components/Example";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <>
+    <Example />
       <div className="App">
         <Auth />
         <MovieDB />

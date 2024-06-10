@@ -110,11 +110,12 @@ const MovieDB = () => {
     <>
       <div className="container m-2 p-4">
         <input
-          className="m-2"
+          className="m-2 p-2 bg-sky-200 rounded"
           placeholder="Movie Title"
           onChange={(e) => setNewMovieTitle(e.target.value)}
         />
         <input
+          className="m-2 p-2 bg-sky-200 rounded"
           placeholder="Release"
           type="number"
           onChange={(e) => setNewReleaseDate(e.target.value)}

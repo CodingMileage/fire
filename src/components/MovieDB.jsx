@@ -108,6 +108,85 @@ const MovieDB = () => {
 
   return (
     <>
+      <div className="container m-2 p-4">
+        <input
+          className="m-2"
+          placeholder="Movie Title"
+          onChange={(e) => setNewMovieTitle(e.target.value)}
+        />
+        <input
+          placeholder="Release"
+          type="number"
+          onChange={(e) => setNewReleaseDate(e.target.value)}
+        />
+        <div>
+          <input
+            className="m-2"
+            type="checkbox"
+            checked={isNewAward}
+            onChange={(e) => setIsNewAward(e.target.checked)}
+          />
+          <label>Recieved Award</label>
+        </div>
+        <button class="btn btn-primary" onClick={onSubmitMovie}>
+          Submit
+        </button>
+      </div>
+
+      <div className="container p-4">
+        {movieList.map((movie) => (
+          <div>
+            <h1 className="" style={{ color: movie.award ? "green" : "red" }}>
+              {movie.title}
+            </h1>
+            <p>Date: {movie.releaseDate}</p>
+
+            <input
+              className="m-2 p-2 bg-sky-200 rounded
+                "
+              placeholder="New Title..."
+              onChange={(e) => setUpdateTitle(e.target.value)}
+            />
+            <button
+              className="p-2 bg-sky-500 text-white rounded hover:bg-sky-700"
+              onClick={() => updateMovieTitle(movie.id)}
+            >
+              Update Title
+            </button>
+            <button
+              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-700"
+              onClick={() => deleteMovie(movie.id)}
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <input
+          type="file"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (
+              file &&
+              (file.type.includes("audio") || file.type.includes("image"))
+            ) {
+              setFileUpload(e.target.files[0]);
+              setFileType(e.target.files[0].type);
+            } else {
+              alert("File must be audio or image file!");
+              setFileUpload(null);
+              setFileType("");
+            }
+          }}
+        />
+        <button className="btn btn-info" onClick={uploadFile}>
+          Upload File
+        </button>
+        <div>{fileType}</div>
+      </div>
+
       {/* <Container>
         <Form>
           <Row>
@@ -146,26 +225,6 @@ const MovieDB = () => {
           </Row>
         </Form>
       </Container> */}
-      <div>
-        <input
-          placeholder="Movie Title"
-          onChange={(e) => setNewMovieTitle(e.target.value)}
-        />
-        <input
-          placeholder="Release"
-          type="number"
-          onChange={(e) => setNewReleaseDate(e.target.value)}
-        />
-        <input
-          type="checkbox"
-          checked={isNewAward}
-          onChange={(e) => setIsNewAward(e.target.checked)}
-        />
-        <label>Recieved Award</label>
-        <button class="btn btn-primary" onClick={onSubmitMovie}>
-          Submit
-        </button>
-      </div>
 
       {/* <Container>
         <Row>
@@ -202,35 +261,6 @@ const MovieDB = () => {
         </Row>
       </Container> */}
 
-      <div>
-        {movieList.map((movie) => (
-          <div>
-            <h1 style={{ color: movie.award ? "green" : "red" }}>
-              {movie.title}
-            </h1>
-            <p>Date: {movie.releaseDate}</p>
-
-            <button
-              class="btn btn-danger"
-              onClick={() => deleteMovie(movie.id)}
-            >
-              Delete
-            </button>
-
-            <input
-              placeholder="New Title..."
-              onChange={(e) => setUpdateTitle(e.target.value)}
-            />
-            <button
-              class="btn btn-info"
-              onClick={() => updateMovieTitle(movie.id)}
-            >
-              Update Title
-            </button>
-          </div>
-        ))}
-      </div>
-
       {/* <Container>
         <Form>
           <Row>
@@ -263,30 +293,6 @@ const MovieDB = () => {
           </Row>
         </Form>
       </Container> */}
-
-      <div>
-        <input
-          type="file"
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (
-              file &&
-              (file.type.includes("audio") || file.type.includes("image"))
-            ) {
-              setFileUpload(e.target.files[0]);
-              setFileType(e.target.files[0].type);
-            } else {
-              alert("File must be audio or image file!");
-              setFileUpload(null);
-              setFileType("");
-            }
-          }}
-        />
-        <button className="btn btn-info" onClick={uploadFile}>
-          Upload File
-        </button>
-        <div>{fileType}</div>
-      </div>
     </>
   );
 };

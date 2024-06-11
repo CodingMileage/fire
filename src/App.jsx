@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import "./App.css";
-import { Auth } from "./components/auth";
+import { Auth } from "./components/Auth";
 import MovieDB from "./components/MovieDB";
 import Experiance from "./components/Experiance";
 import Boott from "./components/BootTut/Boott";
@@ -8,26 +8,20 @@ import ReactBoot from "./components/BootTut/ReactBoot";
 import AudioComponent from "./components/AudioComponent";
 import Example from "./components/Example";
 
-
 function App() {
-
-
-
   return (
     <>
-    <Example />
+      <Example />
       <div className="App">
         <Auth />
         <MovieDB />
       </div>
 
       <div className="container p-4">
-        <TailWindCSSButton>
-          TailWindCSS
-        </TailWindCSSButton>
+        <TailWindCSSButton>TailWindCSS</TailWindCSSButton>
       </div>
 
-      <AudioComponent />
+      {/* <AudioComponent /> */}
 
       {/* <Boott /> */}
       {/* <ReactBoot /> */}
@@ -42,13 +36,15 @@ function App() {
 }
 
 function TailWindCSSButton(props) {
-  return(
-    <button className="bg-blue-500 text-white font-medium px-4 py-2 rounded
+  return (
+    <button
+      className="bg-blue-500 text-white font-medium px-4 py-2 rounded
     hover:bg-blue-600
-    ">
+    "
+    >
       {props.children}
     </button>
-  )
+  );
 }
 
 export default App;

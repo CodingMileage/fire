@@ -20,24 +20,41 @@ import {
   FormGroup,
 } from "react-bootstrap";
 
+export const logout = async () => {
+  try {
+    await signOut(auth);
+    console.log("Logged out");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const profilePhoto = () => {
+  return <img src={photo} />;
+};
+
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [photo, setPhoto] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      if (currentUser && currentUser.photoURL) {
+        setPhoto(currentUser.photoURL);
+      }
     });
-
-    // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const signIn = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User created");
+      setEmail("");
+      setPassword("");
     } catch (error) {
       console.log(error);
     }
@@ -47,15 +64,6 @@ export const Auth = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       console.log("Signed in with Google");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      console.log("Logged out");
     } catch (error) {
       console.log(error);
     }
@@ -114,68 +122,133 @@ export const Auth = () => {
         </Row>
       </Container> */}
 
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
-  </div>
-
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
-      <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-        <div class="mt-2">
-          <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Sign in to your account
+          </h2>
         </div>
-      </div>
 
-      <div>
-        <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-          <div class="text-sm">
-            <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-          </div>
-        </div>
-        <div class="mt-2">
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-        </div>
-      </div>
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form class="space-y-6">
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium leading-6 bg-grey-900 text-gray-900"
+                onChange={(e) => setEmail(e.target.value)}
+              >
+                Email address
+              </label>
+              <div class="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
 
-      <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-      </div>
-    </form>
+            <div>
+              <div class="flex items-center justify-between">
+                <label
+                  for="password"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  onChange={(e) => setPassword(e.target.value)}
+                >
+                  Password
+                </label>
+                <div class="text-sm">
+                  <a
+                    href="#"
+                    class="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div class="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
 
-    <p class="mt-10 text-center text-sm text-gray-500">
-      Not a member?
-      <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
-    </p>
-  </div>
-</div>
-
-      {/* <div className="container">
-        <div>{user ? `Hi ${user.displayName}` : "You are not logged in"}</div>
-
-        <div>
-          <div className="container">
-            {user ? (
-              <button className="btn btn-danger" onClick={logout}>
-                Logout
+            <div>
+              <button
+                type="submit"
+                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={signIn}
+              >
+                Sign in
               </button>
-            ) : (
-              <>
-                <div className="container">
-                  <div className="grid justify-items-center ">
-                    <input
-                      placeholder="Email..."
-                      type="email"
-                      className="m-2 p-2 bg-sky-200 rounded"
-                      aria-describedby="emailHelp"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <small id="emailHelp" className="form-text text-muted">
-                      We'll never share your email with anyone else.
-                    </small>
+
+              <button
+                class="flex mt-2 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={signInWithGoogle}
+              >
+                Sign In With Google
+              </button>
+            </div>
+          </form>
+
+          <p class="mt-10 text-center text-sm text-gray-500">
+            Not a member?
+            <a
+              href="#"
+              class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Start a 14 day free trial
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <div className="">
+        <div className="container">
+          {user ? (
+            <>
+              {user.photoURL && (
+                <img className="rounded-xl" src={user.photoURL} alt="Profile" />
+              )}
+              <div>Hi {user.displayName}</div>
+            </>
+          ) : (
+            "You are not logged in"
+          )}
+
+          {user ? (
+            <button
+              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-800"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <div className="container">
+                <div className="flex-col">
+                  <input
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                    placeholder="Email..."
+                    type="email"
+                    className="m-2 p-2 bg-sky-200 rounded"
+                    aria-describedby="emailHelp"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <small id="emailHelp" className="form-text text-muted">
+                    We'll never share your email with anyone else.
+                  </small>
                 </div>
                 <input
                   placeholder="Password..."
@@ -194,12 +267,13 @@ export const Auth = () => {
                 >
                   Sign In With Google
                 </button>
-                </div>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
+
+export default Auth;

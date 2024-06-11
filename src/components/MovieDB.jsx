@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Auth } from "../components/auth";
+import { Auth } from "./Auth";
 import { db, auth, storage } from "../config/firebase";
 import {
   getDocs,
@@ -106,32 +106,53 @@ const MovieDB = () => {
     getMovieList();
   }, []);
 
+  function SubmitMovie(props) {
+    return (
+      <button
+        onClick={onSubmitMovie}
+        className="bg-blue-500 text-white font-medium px-4 py-2 rounded
+    hover:bg-blue-600
+    "
+      >
+        {props.children}
+      </button>
+    );
+  }
+
   return (
     <>
-      <div className="container m-2 p-4">
-        <input
-          className="m-2 p-2 bg-sky-200 rounded"
-          placeholder="Movie Title"
-          onChange={(e) => setNewMovieTitle(e.target.value)}
-        />
-        <input
-          className="m-2 p-2 bg-sky-200 rounded"
-          placeholder="Release"
-          type="number"
-          onChange={(e) => setNewReleaseDate(e.target.value)}
-        />
-        <div>
+      <div className="container">
+        <div className="m-2">
           <input
-            className="m-2"
-            type="checkbox"
-            checked={isNewAward}
-            onChange={(e) => setIsNewAward(e.target.checked)}
+            className="m-2 p-2 bg-sky-200 rounded"
+            placeholder="Movie Title"
+            onChange={(e) => setNewMovieTitle(e.target.value)}
           />
-          <label>Recieved Award</label>
+          <input
+            className="m-2 p-2 bg-sky-200 rounded"
+            placeholder="Release"
+            type="number"
+            required
+            onChange={(e) => setNewReleaseDate(e.target.value)}
+          />
+          <div>
+            <input
+              className="m-2"
+              type="checkbox"
+              checked={isNewAward}
+              onChange={(e) => setIsNewAward(e.target.checked)}
+            />
+            <label>Recieved Award</label>
+          </div>
+          {/* <button
+            class="bg-blue-500 text-white font-medium px-4 py-2 rounded
+    hover:bg-blue-400"
+            onClick={onSubmitMovie}
+          >
+            Submit
+          </button> */}
+          <SubmitMovie>Submit</SubmitMovie>
         </div>
-        <button class="btn btn-primary" onClick={onSubmitMovie}>
-          Submit
-        </button>
       </div>
 
       <div className="container p-4">
@@ -149,13 +170,14 @@ const MovieDB = () => {
               onChange={(e) => setUpdateTitle(e.target.value)}
             />
             <button
-              className="p-2 bg-sky-500 text-white rounded hover:bg-sky-700"
+              className="bg-blue-500 text-white font-medium px-4 py-2 rounded
+    hover:bg-blue-400"
               onClick={() => updateMovieTitle(movie.id)}
             >
               Update Title
             </button>
             <button
-              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-700"
+              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-800"
               onClick={() => deleteMovie(movie.id)}
             >
               Delete
@@ -164,8 +186,9 @@ const MovieDB = () => {
         ))}
       </div>
 
-      <div>
+      <div className="container">
         <input
+          className="p-2"
           type="file"
           onChange={(e) => {
             const file = e.target.files[0];
@@ -182,7 +205,11 @@ const MovieDB = () => {
             }
           }}
         />
-        <button className="btn btn-info" onClick={uploadFile}>
+        <button
+          className="bg-blue-500 text-white font-medium px-4 py-2 rounded
+    hover:bg-blue-400"
+          onClick={uploadFile}
+        >
           Upload File
         </button>
         <div>{fileType}</div>

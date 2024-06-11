@@ -7,6 +7,7 @@ import Boott from "./components/BootTut/Boott";
 import ReactBoot from "./components/BootTut/ReactBoot";
 import AudioComponent from "./components/AudioComponent";
 import Example from "./components/Example";
+import DiscordUI from "./components/DiscordUI";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Auth />
         <MovieDB />
       </div>
+      <DiscordUI />
 
       <div className="container p-4">
         <TailWindCSSButton>TailWindCSS</TailWindCSSButton>

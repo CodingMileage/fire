@@ -76,31 +76,7 @@ const MovieDB = () => {
     }
   };
 
-  const uploadFile = async () => {
-    if (!fileUpload) return;
 
-    let filesFolderRef;
-    if (fileType.includes("audio")) {
-      filesFolderRef = ref(storage, `music/${fileUpload.name}`);
-    } else if (fileType.includes("image")) {
-      filesFolderRef = ref(storage, `image/${fileUpload.name}`);
-    } else {
-      alert("Please select an audio or image file!");
-      setFileUpload(null);
-      return;
-    }
-
-    try {
-      await uploadBytes(filesFolderRef, fileUpload);
-      alert("File uploaded successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("File upload failed!");
-    } finally {
-      setFileUpload(null);
-      setFileType("");
-    }
-  };
 
   useEffect(() => {
     getMovieList();
@@ -124,12 +100,12 @@ const MovieDB = () => {
       <div className="container">
         <div className="m-2">
           <input
-            className="m-2 p-2 bg-sky-200 rounded"
+            className="user-input"
             placeholder="Movie Title"
             onChange={(e) => setNewMovieTitle(e.target.value)}
           />
           <input
-            className="m-2 p-2 bg-sky-200 rounded"
+            className="user-input"
             placeholder="Release"
             type="number"
             required
@@ -164,20 +140,18 @@ const MovieDB = () => {
             <p>Date: {movie.releaseDate}</p>
 
             <input
-              className="m-2 p-2 bg-sky-200 rounded
-                "
+              className="user-input"    
               placeholder="New Title..."
               onChange={(e) => setUpdateTitle(e.target.value)}
             />
             <button
-              className="bg-blue-500 text-white font-medium px-4 py-2 rounded
-    hover:bg-blue-400"
+              className="btnn"
               onClick={() => updateMovieTitle(movie.id)}
             >
               Update Title
             </button>
             <button
-              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-800"
+              className="btnn-red"
               onClick={() => deleteMovie(movie.id)}
             >
               Delete
@@ -323,6 +297,32 @@ const MovieDB = () => {
       </Container> */}
     </>
   );
+};
+
+export const uploadFile = async () => {
+  if (!fileUpload) return;
+
+  let filesFolderRef;
+  if (fileType.includes("audio")) {
+    filesFolderRef = ref(storage, `music/${fileUpload.name}`);
+  } else if (fileType.includes("image")) {
+    filesFolderRef = ref(storage, `image/${fileUpload.name}`);
+  } else {
+    alert("Please select an audio or image file!");
+    setFileUpload(null);
+    return;
+  }
+
+  try {
+    await uploadBytes(filesFolderRef, fileUpload);
+    alert("File uploaded successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("File upload failed!");
+  } finally {
+    setFileUpload(null);
+    setFileType("");
+  }
 };
 
 export default MovieDB;

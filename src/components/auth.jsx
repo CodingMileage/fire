@@ -211,7 +211,7 @@ export const Auth = () => {
         </div>
       </div>
 
-      <div className="">
+      {/* <div className="">
         <div className="container">
           {user ? (
             <>
@@ -271,7 +271,7 @@ export const Auth = () => {
             </>
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

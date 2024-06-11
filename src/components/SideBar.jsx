@@ -4,6 +4,7 @@ import { BsPlus, BsGearFill } from 'react-icons/bs';
 import { FaFire, FaPoo } from 'react-icons/fa';
 import { logout } from "./Auth";
 import { uploadFile } from './MovieDB';
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 
 
 const SideBar = () => {
@@ -21,7 +22,8 @@ const SideBar = () => {
 
         <SideBarIcon onClick={uploadFile} icon={<FaFire size="28"/>}/>
         <SideBarIcon icon={<BsPlus size="32"/>}text="Add" isInput={true} onFileChange={handleFileChange} />
-        <SideBarIcon onClick={logout} icon={<FaPoo size="20"/>}/>
+        <SideBarIcon icon={<FaPoo size="20"/>}/>
+        <SideBarIcon onClick={logout} icon={<FaArrowRightFromBracket size="20" text="Logout"/>}/>
 
     </div>
   );

@@ -122,7 +122,7 @@ export const Auth = () => {
         </Row>
       </Container> */}
 
-      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      {/* <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
@@ -209,14 +209,14 @@ export const Auth = () => {
             </a>
           </p>
         </div>
-      </div>
+      </div> */}
 
-      {/* <div className="">
+      <div className="">
         <div className="container">
           {user ? (
             <>
               {user.photoURL && (
-                <img className="rounded-xl" src={user.photoURL} alt="Profile" />
+                <img className="mt-3 rounded-full" src={user.photoURL} alt="Profile" />
               )}
               <div>Hi {user.displayName}</div>
             </>
@@ -242,7 +242,7 @@ export const Auth = () => {
                     required
                     placeholder="Email..."
                     type="email"
-                    className="m-2 p-2 bg-sky-200 rounded"
+                    className="user-input"
                     aria-describedby="emailHelp"
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -253,7 +253,7 @@ export const Auth = () => {
                 <input
                   placeholder="Password..."
                   type="password"
-                  className="m-2 p-2 bg-sky-200 rounded"
+                  className="user-input"
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
@@ -271,7 +271,7 @@ export const Auth = () => {
             </>
           )}
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

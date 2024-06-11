@@ -120,14 +120,13 @@ const MovieDB = () => {
             />
             <label>Recieved Award</label>
           </div>
-          {/* <button
-            class="bg-blue-500 text-white font-medium px-4 py-2 rounded
-    hover:bg-blue-400"
+          <button
+            class="btnn"
             onClick={onSubmitMovie}
           >
             Submit
-          </button> */}
-          <SubmitMovie>Submit</SubmitMovie>
+          </button>
+          {/* <SubmitMovie>Submit</SubmitMovie> */}
         </div>
       </div>
 

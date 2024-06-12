@@ -19,6 +19,7 @@ import {
   FormControl,
   FormGroup,
 } from "react-bootstrap";
+import { div } from "three/examples/jsm/nodes/Nodes.js";
 
 export const logout = async () => {
   try {
@@ -216,25 +217,28 @@ export const Auth = () => {
           {user ? (
             <>
               {user.photoURL && (
-                <img className="mt-3 rounded-full" src={user.photoURL} alt="Profile" />
+                <img
+                  className="mt-3 rounded-full"
+                  src={user.photoURL}
+                  alt="Profile"
+                />
               )}
               <div>Hi {user.displayName}</div>
             </>
           ) : (
-            "You are not logged in"
+            <div className="container">You are not logged in</div>
           )}
-
           {user ? (
-            <button
-              className="p-2 m-2 bg-red-500 text-white rounded hover:bg-red-800"
-              onClick={logout}
-            >
+            <button className="btnn-red" onClick={logout}>
               Logout
             </button>
           ) : (
             <>
-              <div className="container">
-                <div className="flex-col">
+              <div
+                className="container bg-gray-300 rounded mb-3 p-2
+                flex flex-col justify-center"
+              >
+                <div className="flex flex-col">
                   <input
                     id="email"
                     name="email"
@@ -246,8 +250,8 @@ export const Auth = () => {
                     aria-describedby="emailHelp"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <small id="emailHelp" className="form-text text-muted">
-                    We'll never share your email with anyone else.
+                  <small id="emailHelp" className="ml-2 form-text text-muted">
+                    We'll never share your email with anyone.
                   </small>
                 </div>
                 <input
@@ -257,12 +261,12 @@ export const Auth = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button className="btn btn-primary m-4" onClick={signIn}>
+                <button className="btn btn-primary m-2" onClick={signIn}>
                   Sign In
                 </button>
 
                 <button
-                  className="btn btn-secondary m-4"
+                  className="btn btn-secondary m-2"
                   onClick={signInWithGoogle}
                 >
                   Sign In With Google

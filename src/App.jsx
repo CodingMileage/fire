@@ -7,21 +7,21 @@ import Boott from "./components/BootTut/Boott";
 import ReactBoot from "./components/BootTut/ReactBoot";
 import AudioComponent from "./components/AudioComponent";
 import Example from "./components/Example";
-import DiscordUI from "./components/DiscordUI";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
-      <Example />
+      {/* <Example /> */}
+      <NavBar />
       <div className="App">
         <Auth />
         <MovieDB />
       </div>
-      <DiscordUI />
 
-      <div className="container p-4">
+      {/* <div className="container p-4">
         <TailWindCSSButton>TailWindCSS</TailWindCSSButton>
-      </div>
+      </div> */}
 
       {/* <AudioComponent /> */}
 

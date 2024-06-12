@@ -11,18 +11,6 @@ import {
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Alert,
-  Breadcrumb,
-  Card,
-  Form,
-  FormControl,
-  FormGroup,
-} from "react-bootstrap";
 
 const MovieDB = () => {
   const [movieList, setMovieList] = useState([]);
@@ -76,7 +64,32 @@ const MovieDB = () => {
     }
   };
 
+  const uploadFile = async () => {
+    if (!fileUpload) return;
 
+    let filesFolderRef;
+    if (fileType.includes("audio")) {
+      filesFolderRef = ref(storage, `music/${fileUpload.name}`);
+    } else if (fileType.includes("image")) {
+      filesFolderRef = ref(storage, `image/${fileUpload.name}`);
+    } else {
+      alert("Please select an audio or image file!");
+      setFileUpload(null);
+      return;
+    }
+
+    try {
+      await uploadBytes(filesFolderRef, fileUpload);
+      alert("File uploaded successfully!");
+      setFileUpload(null);
+    } catch (err) {
+      console.error(err);
+      alert("File upload failed!");
+    } finally {
+      setFileUpload(null);
+      setFileType("");
+    }
+  };
 
   useEffect(() => {
     getMovieList();
@@ -98,7 +111,7 @@ const MovieDB = () => {
   return (
     <>
       <div className="container">
-        <div className="m-2">
+        <div className="card">
           <input
             className="user-input"
             placeholder="Movie Title"
@@ -120,10 +133,7 @@ const MovieDB = () => {
             />
             <label>Recieved Award</label>
           </div>
-          <button
-            class="btnn"
-            onClick={onSubmitMovie}
-          >
+          <button class="btnn" onClick={onSubmitMovie}>
             Submit
           </button>
           {/* <SubmitMovie>Submit</SubmitMovie> */}
@@ -132,27 +142,21 @@ const MovieDB = () => {
 
       <div className="container p-4">
         {movieList.map((movie) => (
-          <div>
+          <div className="flex flex-col">
             <h1 className="" style={{ color: movie.award ? "green" : "red" }}>
               {movie.title}
             </h1>
             <p>Date: {movie.releaseDate}</p>
 
             <input
-              className="user-input"    
+              className="user-input"
               placeholder="New Title..."
               onChange={(e) => setUpdateTitle(e.target.value)}
             />
-            <button
-              className="btnn"
-              onClick={() => updateMovieTitle(movie.id)}
-            >
+            <button className="btnn" onClick={() => updateMovieTitle(movie.id)}>
               Update Title
             </button>
-            <button
-              className="btnn-red"
-              onClick={() => deleteMovie(movie.id)}
-            >
+            <button className="btnn-red" onClick={() => deleteMovie(movie.id)}>
               Delete
             </button>
           </div>
@@ -178,11 +182,7 @@ const MovieDB = () => {
             }
           }}
         />
-        <button
-          className="bg-blue-500 text-white font-medium px-4 py-2 rounded
-    hover:bg-blue-400"
-          onClick={uploadFile}
-        >
+        <button className="btnn" onClick={uploadFile}>
           Upload File
         </button>
         <div>{fileType}</div>
@@ -296,32 +296,6 @@ const MovieDB = () => {
       </Container> */}
     </>
   );
-};
-
-export const uploadFile = async () => {
-  if (!fileUpload) return;
-
-  let filesFolderRef;
-  if (fileType.includes("audio")) {
-    filesFolderRef = ref(storage, `music/${fileUpload.name}`);
-  } else if (fileType.includes("image")) {
-    filesFolderRef = ref(storage, `image/${fileUpload.name}`);
-  } else {
-    alert("Please select an audio or image file!");
-    setFileUpload(null);
-    return;
-  }
-
-  try {
-    await uploadBytes(filesFolderRef, fileUpload);
-    alert("File uploaded successfully!");
-  } catch (err) {
-    console.error(err);
-    alert("File upload failed!");
-  } finally {
-    setFileUpload(null);
-    setFileType("");
-  }
 };
 
 export default MovieDB;

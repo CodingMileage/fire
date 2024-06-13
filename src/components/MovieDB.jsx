@@ -162,30 +162,32 @@ const MovieDB = () => {
           </div>
         ))}
       </div>
-
-      <div className="container">
-        <input
-          className="p-2"
-          type="file"
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (
-              file &&
-              (file.type.includes("audio") || file.type.includes("image"))
-            ) {
-              setFileUpload(e.target.files[0]);
-              setFileType(e.target.files[0].type);
-            } else {
-              alert("File must be audio or image file!");
-              setFileUpload(null);
-              setFileType("");
-            }
-          }}
-        />
-        <button className="btnn" onClick={uploadFile}>
-          Upload File
-        </button>
-        <div>{fileType}</div>
+      <div className="card bg-slate-200">
+        <div className="container flex justify-center">
+          <input
+            className=""
+            type="file"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (
+                file &&
+                (file.type.includes("audio") || file.type.includes("image"))
+              ) {
+                setFileUpload(e.target.files[0]);
+                setFileType(e.target.files[0].type);
+              } else {
+                alert("File must be audio or image file!");
+                setFileUpload(null);
+                setFileType("");
+              }
+            }}
+          />
+        
+          <button className="btnn m-0" onClick={uploadFile}>
+            Upload File
+          </button>
+          <div>{fileType}</div>
+        </div>
       </div>
 
       {/* <Container>

@@ -8,12 +8,20 @@ import ReactBoot from "./components/BootTut/ReactBoot";
 import AudioComponent from "./components/AudioComponent";
 import Example from "./components/Example";
 import NavBar from "./components/NavBar";
+import { label } from "three/examples/jsm/nodes/Nodes.js";
+import Music from "./components/Music";
+
 
 function App() {
+
+
+
+
   return (
     <>
       {/* <Example /> */}
       <NavBar />
+      <Music />
       <div className="App">
         <Auth />
         <MovieDB />

@@ -212,21 +212,21 @@ export const Auth = () => {
         </div>
       </div> */}
 
-      <div className="">
-        <div className="container">
+      <div className=" ">
+        <div className="">
           {user ? (
             <>
               {user.photoURL && (
                 <img
-                  className="mt-3 rounded-full"
+                  className="rounded-full"
                   src={user.photoURL}
                   alt="Profile"
                 />
               )}
-              <div>Hi {user.displayName}</div>
+              {/* <div>Hi {user.displayName}</div> */}
             </>
           ) : (
-            <div className="container">You are not logged in</div>
+            <div className="container mt-3">You are not logged in</div>
           )}
           {user ? (
             <button className="btnn-red" onClick={logout}>
@@ -234,10 +234,8 @@ export const Auth = () => {
             </button>
           ) : (
             <>
-              <div
-                className="container bg-gray-300 rounded mb-3 p-2
-                flex flex-col justify-center"
-              >
+              <div className="container">
+                <div className="card">
                 <div className="flex flex-col">
                   <input
                     id="email"
@@ -261,16 +259,17 @@ export const Auth = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button className="btn btn-primary m-2" onClick={signIn}>
+                <button className="btnn" onClick={signIn}>
                   Sign In
                 </button>
 
                 <button
-                  className="btn btn-secondary m-2"
+                  className="btnn"
                   onClick={signInWithGoogle}
                 >
                   Sign In With Google
                 </button>
+                </div>
               </div>
             </>
           )}

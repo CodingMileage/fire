@@ -3,7 +3,7 @@ import { Howl } from 'howler';
 import music from './Music.mp3';
 
 const audioClip = [
-  { sound: music, label: 'Yea' },
+  { sound: "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3", label: 'Yea' },
 ];
 
 const Music = () => {
@@ -69,13 +69,13 @@ const Music = () => {
   const RenderButtonSound = () => {
     return audioClip.map((soundObj, index) => (
       <div className='flex flex-row justify-center p-3' key={index}>
-        {/* <p>{soundObj.label}</p>
+        <p>{soundObj.label}</p>
         <button
           onClick={() => { localPlay(soundObj.sound, 'mp3') }}
           className='p-2 m-2 bg-purple-200 rounded-lg'
         >
           {soundObj.label}
-        </button> */}
+        </button>
         {/* <p className='p-2 m-2 bg-blue-200 rounded-lg'>
           {soundObj.sound.split('/').pop().split('.')[0]}
         </p> */}
@@ -100,18 +100,18 @@ const Music = () => {
           <div>
           <h1 className='font-bold text-center'>Rate: {Math.round(rate * 100)}%</h1>
           <button 
-  className='btnn px-4 py-1'
-  onClick={() => changeRate(-0.05)}
->
-  -
-</button>
+            className='btnn px-4 py-1'
+            onClick={() => changeRate(-0.05)}
+          >
+            -
+        </button>
 
-<button 
-  className='btnn px-4 py-1'
-  onClick={() => changeRate(0.05)}
->
-  +
-</button>
+        <button 
+          className='btnn px-4 py-1'
+          onClick={() => changeRate(0.05)}
+          >
+            +
+        </button>
           </div>
         </div>
 
@@ -121,13 +121,13 @@ const Music = () => {
         >
           Pause
         </button>
-
+{/* 
         <button
           onClick={() => changeRate((prompt("Enter value")))}
           className=' btnn bg-green-200 hover:bg-green-600'
         >
           Change Rate
-        </button>
+        </button> */}
         
         <div className='flex flex-col items-center justify-center p-3'>
         <input 

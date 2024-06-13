@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 // const colors require('tailwindcss/colors')
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", 'node_modules/flowbite-react/lib/esm/**/*.js'],
   darkMode: "class",
   theme: {
     screens: {
@@ -38,5 +38,8 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require('flowbite/plugin')
+  ],
 };

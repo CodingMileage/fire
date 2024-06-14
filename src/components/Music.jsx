@@ -92,8 +92,6 @@ const Music = () => {
     }
   };
 
-  const durationn = () => {};
-
   // const RenderButtonSound = () => {
   //   return audioClip.map((soundObj, index) => (
   //     <div className="justify-center p-3 " key={index}>
@@ -126,7 +124,7 @@ const Music = () => {
   // };
 
   return (
-    <div className="card">
+    <div className="card ">
       <MusicPlayer
         pausePlay={pausePlay}
         vol={vol}

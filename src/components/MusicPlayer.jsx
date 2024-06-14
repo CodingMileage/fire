@@ -29,7 +29,7 @@ const MusicPlayer = ({
   }, [soundRef]);
 
   return (
-    <div class="bg-[url('https://picsum.photos/700')] p-4 flex justify-center items-center">
+    <div class="bg-[url('https://picsum.photos/900')] p-4 flex justify-center items-center">
       <div class="bg-white p-8 rounded-lg shadow-md w-80">
         <img
           src="https://picsum.photos/200"
@@ -159,7 +159,7 @@ const MusicPlayer = ({
                 type="range"
                 min="0.1"
                 max="2.0"
-                step="0.05"
+                step="0.01"
                 value={rate}
                 className="rateSlider"
                 id="myRate"

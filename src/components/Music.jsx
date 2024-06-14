@@ -1,15 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Howl } from "howler";
 import MusicPlayer from "./MusicPlayer";
-import music from "./Music.mp3";
-
-const audioClip = [
-  {
-    sound:
-      "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
-    label: "Yea",
-  },
-];
 
 const Music = () => {
   const [fileUpload, setFileUpload] = useState(null);
@@ -18,14 +9,15 @@ const Music = () => {
   const [vol, setVol] = useState(0.5);
   const [songLength, setSongLength] = useState(0);
   const [title, setTitle] = useState("");
+  const [fileList, setFileList] = useState([]);
 
   const soundRef = useRef(null);
 
   useEffect(() => {
-    if (soundRef && soundRef.current) {
+    if (soundRef.current) {
       setSongLength(soundRef.current.duration());
     }
-  }, [soundRef]);
+  }, [soundRef.current]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -39,6 +31,16 @@ const Music = () => {
     }
   };
 
+  const handleFolderChange = (event) => {
+    const files = Array.from(event.target.files);
+    const audioFiles = files.filter(file => file.type.startsWith("audio/"));
+    setFileList(audioFiles.map(file => ({
+      url: URL.createObjectURL(file),
+      name: file.name,
+      format: file.name.split('.').pop()
+    })));
+  };
+
   const localPlay = (src, format) => {
     if (soundRef.current) {
       soundRef.current.unload();
@@ -50,27 +52,20 @@ const Music = () => {
       rate: 1.0,
       volume: vol,
       onload: () => {
-        setSongLength(soundRef.current._duration);
-        // console.log(soundRef.current._duration % 60);
+        setSongLength(soundRef.current.duration());
       },
     });
 
     soundRef.current.play();
   };
 
-  // const sound = new Howl({
-  //   src,
-  //   format: [format],
-  //   onload: () => {
-  //     console.log("Great");
-  //   },
-  // });
-
   const pausePlay = () => {
-    if (soundRef.current && soundRef.current.playing()) {
-      soundRef.current.pause();
-    } else if (soundRef.current && soundRef.current.pause()) {
-      soundRef.current.play();
+    if (soundRef.current) {
+      if (soundRef.current.playing()) {
+        soundRef.current.pause();
+      } else {
+        soundRef.current.play();
+      }
     }
   };
 
@@ -92,39 +87,15 @@ const Music = () => {
     }
   };
 
-  // const RenderButtonSound = () => {
-  //   return audioClip.map((soundObj, index) => (
-  //     <div className="justify-center p-3 " key={index}>
-  //       <p>{soundObj.label}</p>
-  //       <button
-  //         onClick={() => { localPlay(soundObj.sound, 'mp3') }}
-  //         className='p-2 m-2 bg-purple-200 rounded-lg'
-  //       >
-  //         {soundObj.label}
-  //       </button>
-
-  //       <p className='p-2 m-2 bg-blue-200 rounded-lg'>
-  //         {soundObj.sound.split('/').pop().split('.')[0]}
-  //       </p>
-
-  //       {console.log(soundRef)}
-
-  //       <button onClick={pausePlay} className="btnn">
-  //         Pause
-  //       </button>
-
-  //       <button
-  //         onClick={() => changeRate((prompt("Enter value")))}
-  //         className='bg-green-200 btnn hover:bg-green-600'
-  //       >
-  //         Change Rate
-  //       </button>
-  //     </div>
-  //   ));
-  // };
+  const changeSong = () => {
+    if (fileList) {
+      console.log(soundRef.current)
+      console.log(fileList)
+    }
+  }
 
   return (
-    <div className="card ">
+    <div className="card">
       <MusicPlayer
         pausePlay={pausePlay}
         vol={vol}
@@ -134,27 +105,47 @@ const Music = () => {
         soundRef={soundRef}
         songLength={songLength}
         title={title}
+        changeSong={changeSong}
       />
 
       <div className="flex flex-col items-center justify-center p-3">
-        <input
+        {/* <input
           type="file"
           accept="audio/*"
           onChange={handleFileChange}
           className="p-2 m-2 bg-gray-200 rounded-lg"
+        /> */}
+        <input
+          type="file"
+          webkitdirectory=""
+          multiple
+          onChange={handleFolderChange}
+          className="p-2 m-2 bg-gray-200 rounded-lg"
         />
         {fileUpload && (
           <button
-            onClick={() => {
-              localPlay(fileUpload, fileFormat);
-            }}
+            onClick={() => localPlay(fileUpload, fileFormat)}
             className="p-2 m-2 bg-blue-200 rounded-lg"
           >
             Play Uploaded File
           </button>
         )}
+        {fileList.length > 0 && (
+          <div className="flex flex-wrap flex-col">
+            {fileList.map((file, index) => (
+              <div key={index} className="p-2 m-2 flex flex-col  bg-gray-100 rounded-lg">
+                <p>{file.name}</p>
+                <button
+                  onClick={() => localPlay(file.url, file.format)}
+                  className="p-2 m-2 btn bg-green-200 rounded-lg"
+                >
+                  Play
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      {/* {RenderButtonSound()} */}
     </div>
   );
 };

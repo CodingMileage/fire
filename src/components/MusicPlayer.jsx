@@ -9,6 +9,7 @@ const MusicPlayer = ({
   soundRef,
   songLength,
   title,
+  changeSong
 }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const formatTime = (seconds) => {
@@ -108,6 +109,7 @@ const MusicPlayer = ({
               class="w-4 h-4 text-gray-600"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              onClick={changeSong}
             >
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g
